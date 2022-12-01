@@ -16,17 +16,19 @@ function getElementDiv (contentText, whereWillGo, numberToPrint, exceptionsList)
     // appendo l'elemento alla variabile gameArea
     whereWillGo.append(createdElement);
     //eventListener sulla casella creata
-    createdElement.addEventListener ('click', function() {
-        if (exceptionsList.includes(createdElement)) {
-            
-            console.log(numberToPrint)
+
+    if (exceptionsList.includes(parseInt(createdElement.innerText))) {
+            createdElement.addEventListener ('click', function() {
+                alert('Acciderbolina! Hai perso!!!!')
+                console.log(numberToPrint)
+            })
         } else {
-            createdElement.classList.toggle('bgAlternativo');
-        }
-    })
+            createdElement.addEventListener ('click', function() {
+            createdElement.classList.add('bgAlternativo');
+        })
+    }
     return createdElement;
 }
-
 //^_______________________________________________________________________________
 //funzione per generare un numero randomico tra due valori
 function randomNumberBetweenLimits (minValue, maxValue) {
@@ -75,14 +77,16 @@ playButton.addEventListener ('click', function() {
     // svuoto l'area prima di iniziare il ciclo che inserisce gli elementi
     gameArea.innerHTML = '';
     // ciclo che esegue la funzione getElementDiv 100 volte, inserendo ogni volta il numero dell'interazione come testo dell'elemento inserito
+    minesArray = [];
+
     for ( let i = 0 ; i < numberOfMines ; i++) {
         singleMinePositionGenerator(minesArray, 1, gameAreaCells)
     }
+
+    console.log(minesArray)
     
     for ( let i = 1 ; i < gameAreaCells + 1 ; i++) {
         getElementDiv(i, gameArea, i, minesArray);
     }
 
-    console.log(minesArray)
 })
-
