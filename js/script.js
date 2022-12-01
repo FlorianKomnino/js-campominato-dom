@@ -31,3 +31,9 @@ playButton.addEventListener ('click', function() {
     }
 })
 
+
+let minesArray = [];
+
+function minesGenerator (generatedUniqueNumbersList, minNumbersToEnter, maxNumbersToEnter) {
+    
+}
