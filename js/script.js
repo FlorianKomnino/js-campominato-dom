@@ -6,65 +6,6 @@ console.log('Hello World!');
 //^===============================================================================
 
 //^_______________________________________________________________________________
-function eventListenersRemover (array) {
-    for (i=1 ; i < array.length; i++) {
-        let indexVariable = document.getElementById(i);
-        indexVariable.removeEventListener ('click', onClickOnEmptyCell, true)
-    }
-}
-//^_______________________________________________________________________________
-function onClickOnBomb () {
-    alert('Acciderbolina! Hai perso!!!!');
-    //rimuovo tutti gli event listener
-    for (i=0 ; i < 100; i++) {
-        document.getElementById(`${i}`).removeEventListener ('click', onClickOnEmptyCell, true)
-    }
-
-}
-//^_______________________________________________________________________________
-function onClickOnEmptyCell () {
-    console.log(this.id);
-}
-//^_______________________________________________________________________________
-/*    //eventListener sulla casella creata
-    if (exceptionsList.includes(parseInt(createdElement.innerText))) {
-            createdElement.addEventListener ('click', function () {
-                alert('Acciderbolina! Hai perso!!!!');
-            }, true);
-        } else {
-            createdElement.addEventListener ('click', function () {
-                createdElement.classList.add('bgAlternativo')
-                document.getElementById(createdElement.id).innerText = '0';
-            }, true)
-    }
-    return createdElement;
-}*/
-//^_______________________________________________________________________________
-//funzione che crea un elemento html
-function getElementDiv (contentText, whereWillGo, exceptionsList, idArray) {
-    let createdElement = document.createElement('div');
-    // il testo contenuto all'interno dell'elemento é l'argomento inserito
-    createdElement.innerText = contentText;
-    // aggiungo classi casella e p-2
-    createdElement.classList.add('casella', 'p-2');
-    // appendo l'elemento alla variabile gameArea
-    whereWillGo.append(createdElement);
-    
-    //aggiungo id all'elemento
-    createdElement.id = contentText
-
-    //aggiungo l'id dell'elemento a una lista
-    idArray.push(createdElement.id)
-
-    //eventListener sulla casella creata
-    if (exceptionsList.includes(parseInt(createdElement.innerText))) {
-            createdElement.addEventListener ('click', onClickOnBomb, true);
-        } else {
-            createdElement.addEventListener ('click', onClickOnEmptyCell, true)
-    }
-    return createdElement;
-}
-//^_______________________________________________________________________________
 //funzione per generare un numero randomico tra due valori
 function randomNumberBetweenLimits (minValue, maxValue) {
     const generatedNumber = Math.floor(Math.random() * (maxValue - minValue + 1) + minValue);
@@ -88,6 +29,48 @@ function singleMinePositionGenerator (generatedUniqueNumbersList, minSquareNumbe
     }
     return randomUniqueNumber;
 }
+//^_______________________________________________________________________________
+//funzione che crea un elemento html
+function getElementDiv (contentText, whereWillGo, idArray, gameLost, exceptionsList) {
+    let createdElement = document.createElement('div');
+    // il testo contenuto all'interno dell'elemento é l'argomento inserito
+    createdElement.innerText = contentText;
+    // aggiungo classi casella e p-2
+    createdElement.classList.add('casella', 'p-2');
+    // appendo l'elemento alla variabile gameArea
+    whereWillGo.append(createdElement);
+    
+    //aggiungo id all'elemento
+    createdElement.id = contentText
+
+    //aggiungo l'id dell'elemento a una lista
+    idArray.push(createdElement.id)
+
+    //eventListener sulla casella creata
+    if (exceptionsList.includes(parseInt(createdElement.innerText))) {
+        createdElement.addEventListener ('click', function () {
+            if (gameLost === false) {
+                alert('Acciderbolina! Hai perso!!!!');
+                gameLost = true;
+                console.log(gameLost)
+            }
+        });
+    } else {
+        createdElement.addEventListener ('click', function () {
+            if (gameLost === false) {
+                createdElement.classList.add('bgAlternativo');
+                document.getElementById(createdElement.id).innerText = '0';
+                console.log(this.id);
+                console.log(gameLost);
+
+            } else {
+                console.log('Mi spiace, hai perso!');
+            }
+        })
+    }
+
+    return createdElement;
+}
 //^===============================================================================
 //^==============================  FINE FUNZIONI  ================================
 //^===============================================================================
@@ -109,6 +92,11 @@ const numberOfMines = 16;
 //creazione variabile : quantitá di celle richiesta
 let gameAreaCells = 100;
 
+//creo variabili di gioco
+let gameOver = false;
+let punteggio;
+let gameWin = false;
+
 // event listener che permette l'interazione con il playButton
 playButton.addEventListener ('click', function() {
     // svuoto l'area prima di iniziare il ciclo che inserisce gli elementi
@@ -121,9 +109,13 @@ playButton.addEventListener ('click', function() {
     }
 
     console.log(minesArray)
-    
+    let alreadyCreatedElement;
     for ( let i = 1 ; i < gameAreaCells + 1 ; i++) {
-        getElementDiv(i, gameArea, minesArray, idNamesList);
+
+    getElementDiv(i, gameArea, idNamesList, gameOver, minesArray);
+
     }
 
 })
+
+
