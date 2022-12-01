@@ -54,17 +54,33 @@ function getElementDiv (contentText, whereWillGo, idArray) {
     function cellsInteraction (exceptionsList, element) {
         if (exceptionsList.includes(parseInt(element.innerText))) {
             element.addEventListener ('click', function () {
-                if (gameOver === false) {
+                if (gameWin) {
+                    alert('Hai vinto la partita');
+                } else if (!gameOver) {
                     alert('Acciderbolina! Hai perso!!!!');
                     gameOver = true;
                 }
             });
         } else {
             element.addEventListener ('click', function () {
-                if (gameOver === false) {
-                    element.classList.add('bgAlternativo');
-                    element.innerText = '0';
-                    console.log(this.id);
+                if (gameWin) {
+                    alert('Hai vinto la partita');
+                } else if (!gameOver) {
+                    if (!element.classList.contains('bgAlternativo')) {
+                        punteggio++;
+                        element.classList.add('bgAlternativo');
+                        element.innerText = '0';
+                        console.log(punteggio);
+
+                        if (punteggio == gameAreaCells - numberOfMines) {
+                            gameWin = true;
+                        }
+                        
+                        if (gameWin === true) {
+                            alert('Hai vinto la partita');
+                        }
+                    }
+
                 } else {
                     console.log('Inizia un\'altra partita premendo il tasto play');
                 }
@@ -96,15 +112,22 @@ let gameAreaCells = 100;
 
 //creo variabili di gioco
 let gameOver = false;
-let punteggio;
+let punteggio = 0;
 let gameWin = false;
+
+
 
 // event listener che permette l'interazione con il playButton
 playButton.addEventListener ('click', function() {
     // svuoto l'area prima di iniziare il ciclo che inserisce gli elementi
     gameArea.innerHTML = '';
-    // setto variabile su false per far interagire gli event listener
+    // setto variabili su false per far interagire gli event listener
     gameOver = false;
+    gameWin = false;
+    // azzero il punteggio
+    punteggio = 0;
+
+    console.log(gameOver, gameWin, punteggio);
     // ciclo che esegue la funzione getElementDiv 100 volte, inserendo ogni volta il numero dell'interazione come testo dell'elemento inserito
     minesArray = [];
 
