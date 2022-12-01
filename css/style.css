@@ -33,12 +33,7 @@ div div.casella.bgAlternativo {
     height: 70px;
 }
 
-#gameArea {
-    /* height: 500px;
-    width: 500px; */
-}
-
-#gameAreaContainer {
+#gameContainer {
     margin: 0 auto;
     width: 550px;
 }

@@ -15,15 +15,33 @@ function eventListenersRemover (array) {
 //^_______________________________________________________________________________
 function onClickOnBomb () {
     alert('Acciderbolina! Hai perso!!!!');
-    console.log(this.id);
+    //rimuovo tutti gli event listener
+    for (i=0 ; i < 100; i++) {
+        document.getElementById(`${i}`).removeEventListener ('click', onClickOnEmptyCell, true)
+    }
+
 }
 //^_______________________________________________________________________________
 function onClickOnEmptyCell () {
     console.log(this.id);
 }
 //^_______________________________________________________________________________
+/*    //eventListener sulla casella creata
+    if (exceptionsList.includes(parseInt(createdElement.innerText))) {
+            createdElement.addEventListener ('click', function () {
+                alert('Acciderbolina! Hai perso!!!!');
+            }, true);
+        } else {
+            createdElement.addEventListener ('click', function () {
+                createdElement.classList.add('bgAlternativo')
+                document.getElementById(createdElement.id).innerText = '0';
+            }, true)
+    }
+    return createdElement;
+}*/
+//^_______________________________________________________________________________
 //funzione che crea un elemento html
-function getElementDiv (contentText, whereWillGo, numberToPrint, exceptionsList) {
+function getElementDiv (contentText, whereWillGo, exceptionsList, idArray) {
     let createdElement = document.createElement('div');
     // il testo contenuto all'interno dell'elemento é l'argomento inserito
     createdElement.innerText = contentText;
@@ -32,7 +50,11 @@ function getElementDiv (contentText, whereWillGo, numberToPrint, exceptionsList)
     // appendo l'elemento alla variabile gameArea
     whereWillGo.append(createdElement);
     
+    //aggiungo id all'elemento
     createdElement.id = contentText
+
+    //aggiungo l'id dell'elemento a una lista
+    idArray.push(createdElement.id)
 
     //eventListener sulla casella creata
     if (exceptionsList.includes(parseInt(createdElement.innerText))) {
@@ -66,9 +88,6 @@ function singleMinePositionGenerator (generatedUniqueNumbersList, minSquareNumbe
     }
     return randomUniqueNumber;
 }
-
-
-
 //^===============================================================================
 //^==============================  FINE FUNZIONI  ================================
 //^===============================================================================
@@ -77,6 +96,9 @@ let gameArea = document.getElementById('gameArea');
 
 //variabile assegnata all'id del playButton
 let playButton = document.getElementById('playButton');
+
+//creo arrey con i numeri a fare da riferimento agli id
+const idNamesList = [];
 
 //creazione array vuoto per la creazione delle mine
 let minesArray = [];
@@ -101,7 +123,7 @@ playButton.addEventListener ('click', function() {
     console.log(minesArray)
     
     for ( let i = 1 ; i < gameAreaCells + 1 ; i++) {
-        getElementDiv(i, gameArea, i, minesArray);
+        getElementDiv(i, gameArea, minesArray, idNamesList);
     }
 
 })
