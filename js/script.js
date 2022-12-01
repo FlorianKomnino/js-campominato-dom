@@ -7,7 +7,7 @@ console.log('Hello World!');
 
 //^_______________________________________________________________________________
 //funzione che crea un elemento html
-function getElementDiv (contentText, whereWillGo, numberToPrint) {
+function getElementDiv (contentText, whereWillGo, numberToPrint, exceptionsList) {
     let createdElement = document.createElement('div');
     // il testo contenuto all'interno dell'elemento é l'argomento inserito
     createdElement.innerText = contentText;
@@ -17,9 +17,12 @@ function getElementDiv (contentText, whereWillGo, numberToPrint) {
     whereWillGo.append(createdElement);
     //eventListener sulla casella creata
     createdElement.addEventListener ('click', function() {
-
-        createdElement.classList.toggle('bgAlternativo');
-        console.log(numberToPrint)
+        if (exceptionsList.includes(createdElement)) {
+            
+            console.log(numberToPrint)
+        } else {
+            createdElement.classList.toggle('bgAlternativo');
+        }
     })
     return createdElement;
 }
@@ -77,7 +80,7 @@ playButton.addEventListener ('click', function() {
     }
     
     for ( let i = 1 ; i < gameAreaCells + 1 ; i++) {
-        getElementDiv(i, gameArea, i);
+        getElementDiv(i, gameArea, i, minesArray);
     }
 
     console.log(minesArray)
