@@ -31,9 +31,36 @@ playButton.addEventListener ('click', function() {
     }
 })
 
+//funzione per generare un numero randomico tra due valori
+function randomNumberBetweenLimits (minValue, maxValue) {
+    const generatedNumber = Math.floor(Math.random() * (maxValue - minValue + 1) + minValue);
+
+    return generatedNumber;
+}
 
 let minesArray = [];
 
-function minesGenerator (generatedUniqueNumbersList, minNumbersToEnter, maxNumbersToEnter) {
-    
+const numberOfMines = 16;
+
+function singleMinePositionGenerator (generatedUniqueNumbersList, minSquareNumber, maxSquareNumber) {
+    let isValid = false;
+    let randomUniqueNumber;
+
+    while (isValid === false) {
+        randomUniqueNumber = randomNumberBetweenLimits(minSquareNumber, maxSquareNumber);
+
+        if (!generatedUniqueNumbersList.includes(randomUniqueNumber)) {
+            generatedUniqueNumbersList.push(randomUniqueNumber);
+            isValid = true;
+        }
+    }
+    return randomUniqueNumber;
 }
+
+console.log(singleMinePositionGenerator(minesArray, 1, 15));
+console.log(singleMinePositionGenerator(minesArray, 1, 15));
+console.log(singleMinePositionGenerator(minesArray, 1, 15));
+console.log(singleMinePositionGenerator(minesArray, 1, 15));
+console.log(singleMinePositionGenerator(minesArray, 1, 15));
+console.log(singleMinePositionGenerator(minesArray, 1, 15));
+console.log(minesArray);
