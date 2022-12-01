@@ -31,7 +31,7 @@ function singleMinePositionGenerator (generatedUniqueNumbersList, minSquareNumbe
 }
 //^_______________________________________________________________________________
 //funzione che crea un elemento html
-function getElementDiv (contentText, whereWillGo, idArray, gameLost, exceptionsList) {
+function getElementDiv (contentText, whereWillGo, idArray) {
     let createdElement = document.createElement('div');
     // il testo contenuto all'interno dell'elemento é l'argomento inserito
     createdElement.innerText = contentText;
@@ -46,31 +46,33 @@ function getElementDiv (contentText, whereWillGo, idArray, gameLost, exceptionsL
     //aggiungo l'id dell'elemento a una lista
     idArray.push(createdElement.id)
 
-    //eventListener sulla casella creata
-    if (exceptionsList.includes(parseInt(createdElement.innerText))) {
-        createdElement.addEventListener ('click', function () {
-            if (gameLost === false) {
-                alert('Acciderbolina! Hai perso!!!!');
-                gameLost = true;
-                console.log(gameLost)
-            }
-        });
-    } else {
-        createdElement.addEventListener ('click', function () {
-            if (gameLost === false) {
-                createdElement.classList.add('bgAlternativo');
-                document.getElementById(createdElement.id).innerText = '0';
-                console.log(this.id);
-                console.log(gameLost);
-
-            } else {
-                console.log('Mi spiace, hai perso!');
-            }
-        })
-    }
-
     return createdElement;
 }
+//^_______________________________________________________________________________
+//funzione che aggiunge un addEventListener ad un div con relativo id
+    //eventListener sulla casella creata
+    function cellsInteraction (exceptionsList, element) {
+        if (exceptionsList.includes(parseInt(element.innerText))) {
+            element.addEventListener ('click', function () {
+                if (gameOver === false) {
+                    alert('Acciderbolina! Hai perso!!!!');
+                    gameOver = true;
+                }
+            });
+        } else {
+            element.addEventListener ('click', function () {
+                if (gameOver === false) {
+                    element.classList.add('bgAlternativo');
+                    element.innerText = '0';
+                    console.log(this.id);
+                } else {
+                    console.log('Inizia un\'altra partita premendo il tasto play');
+                }
+            })
+        }
+    }
+
+
 //^===============================================================================
 //^==============================  FINE FUNZIONI  ================================
 //^===============================================================================
@@ -101,21 +103,24 @@ let gameWin = false;
 playButton.addEventListener ('click', function() {
     // svuoto l'area prima di iniziare il ciclo che inserisce gli elementi
     gameArea.innerHTML = '';
+    // setto variabile su false per far interagire gli event listener
+    gameOver = false;
     // ciclo che esegue la funzione getElementDiv 100 volte, inserendo ogni volta il numero dell'interazione come testo dell'elemento inserito
     minesArray = [];
 
     for ( let i = 0 ; i < numberOfMines ; i++) {
         singleMinePositionGenerator(minesArray, 1, gameAreaCells)
     }
-
     console.log(minesArray)
-    let alreadyCreatedElement;
+    
     for ( let i = 1 ; i < gameAreaCells + 1 ; i++) {
-
-    getElementDiv(i, gameArea, idNamesList, gameOver, minesArray);
-
+    getElementDiv(i, gameArea, idNamesList);
     }
 
+    for ( let i = 1 ; i < gameAreaCells + 1 ; i++) {
+        let elementId = document.getElementById(i);
+        cellsInteraction(minesArray, elementId)
+    }
 })
 
 
