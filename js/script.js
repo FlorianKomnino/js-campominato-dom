@@ -1,6 +1,10 @@
 console.log('Hello World!');
 
-let gameArea = document.getElementById('gameArea');
+
+//^===============================================================================
+//^================================  FUNZIONI  ===================================
+//^===============================================================================
+
 
 //funzione che crea un elemento html
 function getElementDiv (contentText, whereWillGo, numberToPrint) {
@@ -18,29 +22,6 @@ function getElementDiv (contentText, whereWillGo, numberToPrint) {
     return createdElement;
 }
 
-//variabile assegnata all'id del playButton
-let playButton = document.getElementById('playButton');
-
-//creazione array vuoto per la creazione delle mine
-let minesArray = [];
-
-const numberOfMines = 16;
-
-let gameAreaCells = 100;
-
-// event listener che permette l'interazione con il playButton
-playButton.addEventListener ('click', function() {
-    // svuoto l'area prima di iniziare il ciclo che inserisce gli elementi
-    gameArea.innerHTML = '';
-    // ciclo che esegue la funzione getElementDiv 100 volte, inserendo ogni volta il numero dell'interazione come testo dell'elemento inserito
-    for ( let i = 1 ; i < gameAreaCells + 1 ; i++) {
-        getElementDiv(i, gameArea, i);
-    }
-    for ( let i = 0 ; i < numberOfMines ; i++) {
-        singleMinePositionGenerator(minesArray, 1, gameAreaCells)
-    }
-    console.log(minesArray)
-})
 
 //funzione per generare un numero randomico tra due valori
 function randomNumberBetweenLimits (minValue, maxValue) {
@@ -49,7 +30,7 @@ function randomNumberBetweenLimits (minValue, maxValue) {
     return generatedNumber;
 }
 
-
+//crea una mina restituendo un numero randomico che ne determina la posizione, assicurandosi di non ripetere mai la posizione
 function singleMinePositionGenerator (generatedUniqueNumbersList, minSquareNumber, maxSquareNumber) {
     let isValid = false;
     let randomUniqueNumber;
@@ -64,3 +45,37 @@ function singleMinePositionGenerator (generatedUniqueNumbersList, minSquareNumbe
     }
     return randomUniqueNumber;
 }
+
+//^===============================================================================
+//^==============================  FINE FUNZIONI  ================================
+//^===============================================================================
+
+let gameArea = document.getElementById('gameArea');
+
+//variabile assegnata all'id del playButton
+let playButton = document.getElementById('playButton');
+
+//creazione array vuoto per la creazione delle mine
+let minesArray = [];
+
+//creazione variabile : quantitá di mine richiesta
+const numberOfMines = 16;
+
+//creazione variabile : quantitá di celle richiesta
+let gameAreaCells = 100;
+
+// event listener che permette l'interazione con il playButton
+playButton.addEventListener ('click', function() {
+    // svuoto l'area prima di iniziare il ciclo che inserisce gli elementi
+    gameArea.innerHTML = '';
+    // ciclo che esegue la funzione getElementDiv 100 volte, inserendo ogni volta il numero dell'interazione come testo dell'elemento inserito
+    for ( let i = 1 ; i < gameAreaCells + 1 ; i++) {
+        getElementDiv(i, gameArea, i);
+    }
+    for ( let i = 0 ; i < numberOfMines ; i++) {
+        singleMinePositionGenerator(minesArray, 1, gameAreaCells)
+    }
+    
+    console.log(minesArray)
+})
+
