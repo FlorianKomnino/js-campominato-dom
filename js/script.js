@@ -6,6 +6,22 @@ console.log('Hello World!');
 //^===============================================================================
 
 //^_______________________________________________________________________________
+function eventListenersRemover (array) {
+    for (i=1 ; i < array.length; i++) {
+        let indexVariable = document.getElementById(i);
+        indexVariable.removeEventListener ('click', onClickOnEmptyCell, true)
+    }
+}
+//^_______________________________________________________________________________
+function onClickOnBomb () {
+    alert('Acciderbolina! Hai perso!!!!');
+    console.log(this.id);
+}
+//^_______________________________________________________________________________
+function onClickOnEmptyCell () {
+    console.log(this.id);
+}
+//^_______________________________________________________________________________
 //funzione che crea un elemento html
 function getElementDiv (contentText, whereWillGo, numberToPrint, exceptionsList) {
     let createdElement = document.createElement('div');
@@ -20,15 +36,9 @@ function getElementDiv (contentText, whereWillGo, numberToPrint, exceptionsList)
 
     //eventListener sulla casella creata
     if (exceptionsList.includes(parseInt(createdElement.innerText))) {
-            createdElement.addEventListener ('click', function() {
-                alert('Acciderbolina! Hai perso!!!!');
-                console.log(numberToPrint);
-            });
+            createdElement.addEventListener ('click', onClickOnBomb, true);
         } else {
-            createdElement.addEventListener ('click', function() {
-            createdElement.classList.add('bgAlternativo');
-
-        })
+            createdElement.addEventListener ('click', onClickOnEmptyCell, true)
     }
     return createdElement;
 }
@@ -56,6 +66,8 @@ function singleMinePositionGenerator (generatedUniqueNumbersList, minSquareNumbe
     }
     return randomUniqueNumber;
 }
+
+
 
 //^===============================================================================
 //^==============================  FINE FUNZIONI  ================================
