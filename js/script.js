@@ -15,16 +15,19 @@ function getElementDiv (contentText, whereWillGo, numberToPrint, exceptionsList)
     createdElement.classList.add('casella', 'p-2');
     // appendo l'elemento alla variabile gameArea
     whereWillGo.append(createdElement);
-    //eventListener sulla casella creata
+    
+    createdElement.id = contentText
 
+    //eventListener sulla casella creata
     if (exceptionsList.includes(parseInt(createdElement.innerText))) {
             createdElement.addEventListener ('click', function() {
-                alert('Acciderbolina! Hai perso!!!!')
-                console.log(numberToPrint)
-            })
+                alert('Acciderbolina! Hai perso!!!!');
+                console.log(numberToPrint);
+            });
         } else {
             createdElement.addEventListener ('click', function() {
             createdElement.classList.add('bgAlternativo');
+
         })
     }
     return createdElement;
