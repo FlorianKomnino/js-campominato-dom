@@ -52,20 +52,31 @@ function getElementDiv (contentText, whereWillGo, idArray) {
 //funzione che aggiunge un addEventListener ad un div con relativo id
     //eventListener sulla casella creata
     function cellsInteraction (exceptionsList, element) {
+        //codice da esguire se l'elemento inserito nella funzione è una mina
         if (exceptionsList.includes(parseInt(element.innerText))) {
             element.addEventListener ('click', function () {
+                // codice da eseguire se la partita è stata già persa
                 if (gameWin) {
                     alert('Hai vinto la partita');
+                //codice da esguire se il gioco è ancora in corso
                 } else if (!gameOver) {
+                    for (i=0 ; i < exceptionsList.length ; i++){
+                        let bombElement = document.getElementById(`${exceptionsList[i]}`)
+                        bombElement.classList.add('bomb')
+                    }
                     alert('Acciderbolina! Hai perso!!!!');
                     gameOver = true;
                 }
             });
         } else {
+        //codice da esguire se l'elemento inserito NON è una mina
             element.addEventListener ('click', function () {
+                // codice da eseguire se la partita è stata già persa
                 if (gameWin) {
                     alert('Hai vinto la partita');
+                //codice da esguire se il gioco è ancora in corso
                 } else if (!gameOver) {
+                    //codice da esguire se la casella non è ancora stat cliccata
                     if (!element.classList.contains('bgAlternativo')) {
                         punteggio++;
                         element.classList.add('bgAlternativo');
@@ -79,6 +90,7 @@ function getElementDiv (contentText, whereWillGo, idArray) {
                         if (gameWin === true) {
                             alert('Hai vinto la partita');
                         }
+                    //else if sottointeso, se la casella è già stata cliccata non fare nulla
                     }
 
                 } else {
@@ -114,6 +126,12 @@ let gameAreaCells = 100;
 let gameOver = false;
 let punteggio = 0;
 let gameWin = false;
+
+
+
+
+
+
 
 
 

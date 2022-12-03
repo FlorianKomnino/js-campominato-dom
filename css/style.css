@@ -18,11 +18,15 @@ div div.casella {
     text-align: center;
     width: 50px;
     height: 50px;
-    background-color: red;
+    background-color: grey;
 }
 
 div div.casella.bgAlternativo {
     background-color: yellowgreen;
+}
+
+div div.casella.bomb {
+    background-color: red;
 }
 
 .custom-align-center {
