@@ -31,12 +31,14 @@ function singleMinePositionGenerator (generatedUniqueNumbersList, minSquareNumbe
 }
 //^_______________________________________________________________________________
 //funzione che crea un elemento html
-function getElementDiv (contentText, whereWillGo, idArray) {
+function getElementDiv (contentText, whereWillGo, idArray, cellsPerRow) {
     let createdElement = document.createElement('div');
     // il testo contenuto all'interno dell'elemento é l'argomento inserito
     createdElement.innerText = contentText;
     // aggiungo classi casella e p-2
     createdElement.classList.add('casella', 'p-2');
+    createdElement.style.width = `calc(100% / ${cellsPerRow})`
+    createdElement.style.height = `calc(100% / ${cellsPerRow})`
     // appendo l'elemento alla variabile gameArea
     whereWillGo.append(createdElement);
     
@@ -127,8 +129,10 @@ let gameOver = false;
 let punteggio = 0;
 let gameWin = false;
 
+// % Szione dedicata a inserire il numero di bombe nelle caselle vicine
 
-
+let side = Math.sqrt(gameAreaCells);
+console.log(side);
 
 
 
@@ -145,7 +149,6 @@ playButton.addEventListener ('click', function() {
     // azzero il punteggio
     punteggio = 0;
 
-    console.log(gameOver, gameWin, punteggio);
     // ciclo che esegue la funzione getElementDiv 100 volte, inserendo ogni volta il numero dell'interazione come testo dell'elemento inserito
     minesArray = [];
 
@@ -155,7 +158,7 @@ playButton.addEventListener ('click', function() {
     console.log(minesArray)
     
     for ( let i = 1 ; i < gameAreaCells + 1 ; i++) {
-    getElementDiv(i, gameArea, idNamesList);
+    getElementDiv(i, gameArea, idNamesList, side);
     }
 
     for ( let i = 1 ; i < gameAreaCells + 1 ; i++) {
