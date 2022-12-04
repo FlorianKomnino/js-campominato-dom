@@ -102,6 +102,8 @@ function getElementDiv (contentText, whereWillGo, idArray, cellsPerRow) {
         }
     }
 
+//^_______________________________________________________________________________
+//funzione per produrre il numero di mine nelle 8 caselle circostanti
 
 //^===============================================================================
 //^==============================  FINE FUNZIONI  ================================
@@ -129,14 +131,193 @@ let gameOver = false;
 let punteggio = 0;
 let gameWin = false;
 
-// % Szione dedicata a inserire il numero di bombe nelle caselle vicine
+// % ==================================================================
+// % Sezione dedicata a inserire il numero di bombe nelle caselle vicine
+// % ==================================================================
 
 let side = Math.sqrt(gameAreaCells);
 console.log(side);
 
+//dichiaro array degli angoli e lo popolo da in alto a sinistra in senso orario
+const cornersCells = [1];
+
+cornersCells.push(side);
+cornersCells.push(gameAreaCells);
+cornersCells.push(gameAreaCells - side + 1);
+
+//dichiaro array del lato in alto e lo popolo
+let topSideArray = [];
+
+for (let i = 2 ; i < side ; i++) {
+    topSideArray.push(i)
+}
+
+//dichiaro array del lato destro e lo popolo
+let rightSideArray = [];
+
+for (let i = side * 2 ; i < gameAreaCells ; i = i + side) {
+    rightSideArray.push(i)
+}
+
+//dichiaro array del lato in basso e lo popolo
+let bottomSideArray = [];
+
+for (let i = gameAreaCells - side + 2 ; i < gameAreaCells - 1 ; i++) {
+    bottomSideArray.push(i)
+}
+
+//dichiaro array del lato sinistro e lo popolo
+let leftSideArray = [];
+
+for (let i = side + 1 ; i < gameAreaCells - side ; i = i + side) {
+    leftSideArray.push(i)
+}
+
+//dichiaro array di tutte le celle restanti e lo popolo
+let centralCellsArray = [];
+
+for ( i=1 ; i < gameAreaCells ; i++) {
+    if (!cornersCells.includes(i) && !topSideArray.includes(i) && !leftSideArray.includes(i) && !rightSideArray.includes(i) && !bottomSideArray.includes(i)) {
+        centralCellsArray.push(i);
+    }
+}
+
+//stampa in console per effettuare check
+console.log(cornersCells);
+console.log(topSideArray);
+console.log(leftSideArray);
+console.log(rightSideArray);
+console.log(bottomSideArray);
+console.log(centralCellsArray);
+
+//dichiaro variabile di prossimità
+let proximityIndex = 0;
+
+//funzione per agoli
+
+//dichiaro array delle celle che circondano angolo alto sinistra e lo popolo
+const leftTopCornerProximityArray = [2];
+leftTopCornerProximityArray.push(1 + side, 2 + side);
+
+console.log(leftTopCornerProximityArray);
+
+//dichiaro array delle celle che circondano angolo alto destra e lo popolo
+const rightTopCornerProximityArray = [];
+rightTopCornerProximityArray.push(side - 1, side + side - 1, side + side);
+
+console.log(rightTopCornerProximityArray);
+
+//dichiaro array delle celle che circondano angolo basso destra e lo popolo
+const rightBottomCornerProximityArray = [];
+rightBottomCornerProximityArray.push(gameAreaCells - side - 1, gameAreaCells - side, gameAreaCells - 1);
+
+console.log(rightBottomCornerProximityArray);
+
+//dichiaro array delle celle che circondano angolo basso sinistra e lo popolo
+const leftBottomCornerProximityArray = [];
+leftBottomCornerProximityArray.push(gameAreaCells - side + 1, gameAreaCells - side - side + 1, gameAreaCells - side - side);
+
+console.log(leftBottomCornerProximityArray);
 
 
 
+// $ liste di array____________________________________________________
+//dichiaro array contenente gli arrey dei lati in senso orario da quello alto
+let arrayOfSidesArrays = [topSideArray, rightSideArray, bottomSideArray, leftSideArray];
+
+
+//dichiaro array contenente gli array di prossimità degli angoli in senso orario da alto sinistra
+let arrayOfCornersProximityArrays = [leftTopCornerProximityArray, rightTopCornerProximityArray, rightBottomCornerProximityArray, leftBottomCornerProximityArray];
+
+console.log(arrayOfCornersProximityArrays[0].length);
+// $___________________________________________________________________
+
+// % ==================================================================
+// % ================= Funzioni parte dedicata ========================
+
+/*
+questa funzione non serve più perché questo check viene fatto durante le condizioni di cellLocalizer()
+//dichiaro funzione per scegliere l'angolo giusto quando sono in un angolo
+function cornerDetector (categoryArray, clickedCell) {
+    //eseguo un ciclo for per controllare in quale angolo mi trovo
+    for ( i=0 ; i<categoryArray.length ; i++) {
+        if (categoryArray[i] == clickedCell) {
+            return i;
+        }
+    }
+}
+
+console.log(cornerDetector(cornersCells, 10));
+*/
+//dichiaro funzione per scegliere il lato giusto quando sono in un lato
+function sideDetector (categoryArray, clickedCell) {
+    //eseguo un ciclo for per controllare in quale lato mi trovo
+    for ( i=0 ; i<categoryArray.length ; i++) {
+        if (categoryArray[i].includes(clickedCell)) {
+            return i;
+        }
+    }
+}
+
+console.log(sideDetector(arrayOfSidesArrays, 81));
+
+
+// dichiaro funzione per capire dove mi trovo
+function cellLocalizer (cornersArray, clickedCell) {
+    if (clickedCell == 1) {
+
+    } else if (clickedCell == sideSize) {
+
+    } else if (clickedCell == totalCells - sideSize + 1) {
+
+    } else if (clickedCell == totalCells) {
+
+    } else if (leftSideArray.includes(clickedCell)) {
+
+    } else if (topSideArray.includes(clickedCell)) {
+
+    } else if (rightSideArray.includes(clickedCell)) {
+
+    } else if (bottomSideArray.includes(clickedCell)) {
+
+    } else if (leftSideArray.includes(clickedCell)) {
+
+    } else {
+
+    }
+}
+
+
+
+
+
+/*
+function cornerDetector (categoryArray,) {
+
+    for ( i=0 ; i<categoryArray.length ; i++) {
+
+
+        // condizione per decidere a quale array di prossimità andare ad accedere
+        if (cornerValue = categoryArray[i]) {
+            bombsDetector (relativeProximityArray)
+        }
+    }
+}        
+*/
+
+function bombsDetector (relativeProximityArray){
+    proximityIndex = 0;
+    for (i=0 ; i < relativeProximityArray.length ; i++) {
+        if (givenBombsArray.includes(relativeProximityArray[i])) {
+            proximityIndex++;
+        }
+    }
+    return proximityIndex;
+}
+
+// % ==================================================================
+// % =================Fine Sezione dedicata============================
+// % ==================================================================
 
 
 // event listener che permette l'interazione con il playButton
