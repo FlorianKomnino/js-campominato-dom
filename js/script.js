@@ -84,7 +84,7 @@ function getElementDiv (contentText, whereWillGo, idArray, cellsPerRow) {
                     if (!element.classList.contains('bgAlternativo')) {
                         punteggio++;
                         element.classList.add('bgAlternativo');
-                        element.innerText = `${getProximityValue(element, exceptionsList, proximityArrayGeneral, proximityArrayLeft, proximityArrayRight)}`;
+                        element.innerHTML = `${getProximityValue(element)}`;
                         if (punteggio == gameAreaCells - numberOfMines) {
                             gameWin = true;
                         }
@@ -108,46 +108,43 @@ function getElementDiv (contentText, whereWillGo, idArray, cellsPerRow) {
 const proximityArrayGeneral = [-11, -10, -9, -1, 1, 9, 10, 11];
 const proximityArrayLeft = [-10, -9, 1, 10, 11];
 const proximityArrayRight = [-11, -10, -1, 9, 10];
+let proximityIndex = 0;
 
-function getProximityValue(checkedElement, bombList, proximityGeneral, proximityLeft, proximityRight){
-    let base = 0;
+function getProximityValue(element){
+    proximityIndex = 0;
 
-    const lastDigit = String(checkedElement.innerText).slice(-1);
+    const lastDigit = String(element.innerText).slice(-1);
+    console.log(lastDigit);
 
-    if (parseInt(lastDigit) != 1 & parseInt(lastDigit) != 0){
-        checkedElement.innerHTML = '';
-        for (i=0; i<proximityGeneral.length; i++){
-            if (bombList.includes(parseInt(checkedElement.innerText) + parseInt(proximityGeneral[i]))){
-                base += 1;
-                console.log(proximityGeneral[i]);
+    if (lastDigit != 1 & lastDigit != 0){
+        for (let i=0; i<proximityArrayGeneral.length; i++){
+            if (minesArray.includes(parseInt(element.innerText) + parseInt(proximityArrayGeneral[i]))){
+                proximityIndex += 1;
+                console.log(parseInt(element.innerText) + parseInt(proximityArrayGeneral[i]));
+            } else {
+                console.log(parseInt(element.innerText) + parseInt(proximityArrayGeneral[i]));
             }
         }
-        checkedElement.classList.add('right-square');
-        console.log(`prima stampa ${base}`);
     } else if (lastDigit == 1){
-        checkedElement.append('');
-        for (i=0; i<proximityLeft.length; i++){
-            if (bombList.includes(checkedElement.innerText + proximityLeft[i])){
-                base += 1;
-                console.log(proximityLeft[i]);
+        for (let i=0; i<proximityArrayLeft.length; i++){
+            if (minesArray.includes(parseInt(element.innerText) + parseInt(proximityArrayLeft[i]))){
+                proximityIndex += 1;
+                console.log(proximityArrayLeft[i]);
             }
         }
-        checkedElement.classList.add('bgAlternativo');
-        console.log(`seconda stampa ${base}`);
+        element.classList.add('bgAlternativo');
 
     } else if (lastDigit == 0){
-        checkedElement.append('');
-        for (i=0; i<proximityRight.length; i++){
-            if (bombList.includes(checkedElement.innerText + proximityRight[i])){
-                base += 1;
-                console.log(proximityRight[i]);
+        for (let i=0; i<proximityArrayRight.length; i++){
+            if (minesArray.includes(parseInt(element.innerText) + parseInt(proximityArrayRight[i]))){
+                proximityIndex += 1;
+                console.log(proximityArrayRight[i]);
             }
         }
-        checkedElement.classList.add(`bgAlternativo`);
-        console.log(`terza stampa ${base}`);
+        element.classList.add(`bgAlternativo`);
 
     }
-    return base;
+    return proximityIndex;
 }
 
 // &______________
