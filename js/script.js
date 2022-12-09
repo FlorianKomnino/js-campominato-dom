@@ -114,22 +114,18 @@ function getProximityValue(element){
     proximityIndex = 0;
 
     const lastDigit = String(element.innerText).slice(-1);
-    console.log(lastDigit);
 
     if (lastDigit != 1 & lastDigit != 0){
         for (let i=0; i<proximityArrayGeneral.length; i++){
             if (minesArray.includes(parseInt(element.innerText) + parseInt(proximityArrayGeneral[i]))){
                 proximityIndex += 1;
-                console.log(parseInt(element.innerText) + parseInt(proximityArrayGeneral[i]));
             } else {
-                console.log(parseInt(element.innerText) + parseInt(proximityArrayGeneral[i]));
             }
         }
     } else if (lastDigit == 1){
         for (let i=0; i<proximityArrayLeft.length; i++){
             if (minesArray.includes(parseInt(element.innerText) + parseInt(proximityArrayLeft[i]))){
                 proximityIndex += 1;
-                console.log(proximityArrayLeft[i]);
             }
         }
         element.classList.add('bgAlternativo');
@@ -138,7 +134,6 @@ function getProximityValue(element){
         for (let i=0; i<proximityArrayRight.length; i++){
             if (minesArray.includes(parseInt(element.innerText) + parseInt(proximityArrayRight[i]))){
                 proximityIndex += 1;
-                console.log(proximityArrayRight[i]);
             }
         }
         element.classList.add(`bgAlternativo`);
