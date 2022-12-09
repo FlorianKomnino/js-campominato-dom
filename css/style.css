@@ -12,6 +12,13 @@ footer {
     height: 80px;
 }
 
+custom-w-100px {
+    width: 100px;
+}
+
+custom-h-100px {
+    height: 100px;
+}
 
 div div.casella {
     border: 2px solid purple;
@@ -24,6 +31,10 @@ div div.casella.bgAlternativo {
 }
 
 div div.casella.bomb {
+    background-color: red;
+}
+
+.coloredCells {
     background-color: red;
 }
 

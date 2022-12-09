@@ -83,6 +83,7 @@ function getElementDiv (contentText, whereWillGo, idArray, cellsPerRow) {
                     //codice da esguire se la casella non è ancora stata cliccata
                     if (!element.classList.contains('bgAlternativo')) {
                         punteggio++;
+                        points.innerHTML = punteggio;
                         element.classList.add('bgAlternativo');
                         element.innerHTML = `${getProximityValue(element)}`;
                         if (punteggio == gameAreaCells - numberOfMines) {
@@ -148,6 +149,250 @@ function getProximityValue(element){
 //^==============================  FINE FUNZIONI  ================================
 //^===============================================================================
 
+//%_______________________________________________________________________________
+//%________________________ Parte dedicata al cronometro _________________________
+//%_______________________________________________________________________________
+
+
+let centsElement = document.getElementById('cents');
+let decSecElement = document.getElementById('decSec');
+let secondsElement = document.getElementById('seconds');
+let tenSecsElement = document.getElementById('tenSecs');
+let minutesElement = document.getElementById('minutes');
+let tenMinutesElement = document.getElementById('tenMinutes');
+
+
+let cents = 0;
+let decSec = 0;
+let seconds = 0;
+let tenSecs = 0;
+let minutes = 0;
+let tenMinutes = 0;
+
+let resetNeeded = false;
+
+
+let centsTime;
+let decSecTime;
+let secondsTime;
+let tenSecsTime;
+let minutesTime;
+let tenMinutesTime;
+
+
+
+function startTimer () {
+
+    
+    if (resetNeeded) {
+
+        console.log('Hello World!')
+        clearInterval(centsTime);
+        clearInterval(decSecTime);
+        clearInterval(secondsTime);
+        clearInterval(tenSecsTime);
+        clearInterval(minutesTime);
+        clearInterval(tenMinutesTime);
+
+        cents = 0;
+        decSec = 0;
+        seconds = 0;
+        tenSecs = 0;
+        minutes = 0;
+        tenMinutes = 0;
+        tenMinutesElement.innerHTML = tenMinutes;
+        minutesElement.innerHTML = minutes;
+        tenSecsElement.innerHTML = tenSecs;
+        secondsElement.innerHTML = seconds;
+        decSecElement.innerHTML = decSec;
+        centsElement.innerHTML = cents;
+
+        centsTime = setInterval(() => {
+            if (cents < 9) {
+                cents++;
+                centsElement.innerHTML = cents
+            } else {
+                cents = 0
+                centsElement.innerHTML = cents
+            }
+        }, 10);
+
+        decSecTime = setInterval(() => {
+            if (decSec < 9) {
+                decSec++;
+            } else if (decSec < 99) {
+                decSec++;
+                decSecElement.innerHTML = String(decSec)[0];
+            } else {
+                decSec = 0
+                decSecElement.innerHTML = String(decSec)[0];
+            }
+        }, 10);
+
+        secondsTime = setInterval(() => {
+            if (seconds < 99) {
+                seconds++;
+            } else if (seconds < 999) {
+                seconds++;
+                secondsElement.innerHTML = String(seconds)[0];
+            } else {
+                seconds = 0
+                secondsElement.innerHTML = String(seconds)[0];
+            }
+        }, 10);
+
+        tenSecsTime = setInterval(() => {
+            if (tenSecs < 999) {
+                tenSecs++;
+            } else if (tenSecs < 9999) {
+                tenSecs++;
+                tenSecsElement.innerHTML = String(tenSecs)[0];
+            } else {
+                tenSecs = 0
+                tenSecsElement.innerHTML = String(tenSecs)[0];
+            }
+        }, 10);
+
+        minutesTime = setInterval(() => {
+            if (minutes < 59999) {
+                minutes++;
+            } else if (minutes < 599999) {
+                minutes++;
+                minutesElement.innerHTML = String(minutes)[0];
+            } else {
+                minutes = 0
+                minutesElement.innerHTML = String(minutes)[0];
+            }
+        }, 10);
+
+        tenMinutesTime = setInterval(() => {
+            if (tenMinutes < 599999) {
+                tenMinutes++;
+            } else if (tenMinutes < 5999999) {
+                tenMinutes++;
+                tenMinutesElement.innerHTML = String(tenMinutes)[0];
+            } else {
+                tenMinutes = 0
+                tenMinutesElement.innerHTML = String(tenMinutes)[0];
+            }
+        }, 10);
+
+        //^ codice da eseguire al click di una bomba o della casella vincente con le differenti conseguenze
+        resetNeeded = true
+    } else {
+        centsTime = setInterval(() => {
+            if (cents < 9) {
+                cents++;
+                centsElement.innerHTML = cents
+            } else {
+                cents = 0
+                centsElement.innerHTML = cents
+            }
+        }, 10);
+
+        decSecTime = setInterval(() => {
+            if (decSec < 9) {
+                decSec++;
+            } else if (decSec < 99) {
+                decSec++;
+                decSecElement.innerHTML = String(decSec)[0];
+            } else {
+                decSec = 0
+                decSecElement.innerHTML = String(decSec)[0];
+            }
+        }, 10);
+
+        secondsTime = setInterval(() => {
+            if (seconds < 99) {
+                seconds++;
+            } else if (seconds < 999) {
+                seconds++;
+                secondsElement.innerHTML = String(seconds)[0];
+            } else {
+                seconds = 0
+                secondsElement.innerHTML = String(seconds)[0];
+            }
+        }, 10);
+
+        tenSecsTime = setInterval(() => {
+            if (tenSecs < 999) {
+                tenSecs++;
+            } else if (tenSecs < 9999) {
+                tenSecs++;
+                tenSecsElement.innerHTML = String(tenSecs)[0];
+            } else {
+                tenSecs = 0
+                tenSecsElement.innerHTML = String(tenSecs)[0];
+            }
+        }, 10);
+
+        minutesTime = setInterval(() => {
+            if (minutes < 59999) {
+                minutes++;
+            } else if (minutes < 599999) {
+                minutes++;
+                minutesElement.innerHTML = String(minutes)[0];
+            } else {
+                minutes = 0
+                minutesElement.innerHTML = String(minutes)[0];
+            }
+        }, 10);
+
+        tenMinutesTime = setInterval(() => {
+            if (tenMinutes < 599999) {
+                tenMinutes++;
+            } else if (tenMinutes < 5999999) {
+                tenMinutes++;
+                tenMinutesElement.innerHTML = String(tenMinutes)[0];
+            } else {
+                tenMinutes = 0
+                tenMinutesElement.innerHTML = String(tenMinutes)[0];
+            }
+        }, 10);
+
+        //^ codice da eseguire al click di una bomba o della casella vincente con le differenti conseguenze
+        resetNeeded = true
+    }
+}
+
+/*
+let existingEventListenerPauseButton = false;
+
+        if (!existingEventListenerPauseButton) {
+            pausa.addEventListener('click', function () {
+                console.log('Hello World!')
+                clearInterval(centsTime);
+                clearInterval(decSecTime);
+                clearInterval(secondsTime);
+                clearInterval(tenSecsTime);
+                clearInterval(minutesTime);
+                clearInterval(tenMinutesTime);
+
+                timerWorking = false;
+            })
+        }
+        existingEventListenerPauseButton = true
+*/
+//%_______________________________________________________________________________
+//%______________________ Fine parte dedicata al cronometro ______________________
+//%_______________________________________________________________________________
+//^_______________________________________________________________________________
+//%_______________________________________________________________________________
+//%________________________ Parte dedicata al punteggio __________________________
+//%_______________________________________________________________________________
+
+
+
+let points = document.getElementById('points');
+
+
+
+
+
+//%_______________________________________________________________________________
+//%______________________ Fine parte dedicata al punteggio _______________________
+//%_______________________________________________________________________________
+
 let gameArea = document.getElementById('gameArea');
 
 //variabile assegnata all'id del playButton
@@ -174,6 +419,7 @@ let side = Math.sqrt(gameAreaCells);
 
 // event listener che permette l'interazione con il playButton
 playButton.addEventListener ('click', function() {
+    startTimer();
     // svuoto l'area prima di iniziare il ciclo che inserisce gli elementi
     gameArea.innerHTML = '';
     // setto variabili su false per far interagire gli event listener
