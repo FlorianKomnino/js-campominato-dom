@@ -12,12 +12,12 @@ footer {
     height: 80px;
 }
 
-custom-w-100px {
+.custom-w-100px {
     width: 100px;
 }
 
-custom-h-100px {
-    height: 100px;
+.custom-h-50px {
+    height: 50px;
 }
 
 div div.casella {
@@ -40,6 +40,11 @@ div div.casella.bomb {
 
 .custom-align-center {
     align-items: center;
+}
+
+.bestScores {
+    background-color: rgb(74, 74, 235);
+    color: white;
 }
 
 #booleanLogo {

@@ -280,26 +280,9 @@ function timeStopper () {
         pauseNeeded = false;
     }
 }
-
 //%_______________________________________________________________________________
-//%______________________ Fine parte dedicata al cronometro ______________________
-//%_______________________________________________________________________________
-//^_______________________________________________________________________________
-//%_______________________________________________________________________________
-//%________________________ Parte dedicata al punteggio __________________________
-//%_______________________________________________________________________________
-
-
 
 let points = document.getElementById('points');
-
-
-
-
-
-//%_______________________________________________________________________________
-//%______________________ Fine parte dedicata al punteggio _______________________
-//%_______________________________________________________________________________
 
 let gameArea = document.getElementById('gameArea');
 
@@ -325,6 +308,15 @@ let gameWin = false;
 
 let side = Math.sqrt(gameAreaCells);
 
+let arrayFirstPositions = [];
+
+let fistPosition = document.getElementById('firstPosition');
+let secondPosition = document.getElementById('secondPosition');
+let thirdPosition = document.getElementById('thirdPosition');
+
+arrayFirstPositions.push(fistPosition, secondPosition, thirdPosition);
+
+console.log(arrayFirstPositions);
 // event listener che permette l'interazione con il playButton
 playButton.addEventListener ('click', function() {
     startTimer();
