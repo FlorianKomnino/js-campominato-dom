@@ -92,6 +92,7 @@ function getElementDiv (contentText, whereWillGo, idArray, cellsPerRow) {
                         }
                         
                         if (gameWin === true) {
+                            getBestScores (fistPosition, secondPosition, thirdPosition, userNameVariable)
                             timeStopper();
                             alert('Hai vinto la partita');
                         }
@@ -146,6 +147,9 @@ function getProximityValue(element){
 }
 
 // &______________
+
+
+
 
 //^===============================================================================
 //^==============================  FINE FUNZIONI  ================================
@@ -308,15 +312,58 @@ let gameWin = false;
 
 let side = Math.sqrt(gameAreaCells);
 
-let arrayFirstPositions = [];
+let arraybestScoresElements = [];
 
 let fistPosition = document.getElementById('firstPosition');
 let secondPosition = document.getElementById('secondPosition');
 let thirdPosition = document.getElementById('thirdPosition');
 
-arrayFirstPositions.push(fistPosition, secondPosition, thirdPosition);
+arraybestScoresElements.push(fistPosition, secondPosition, thirdPosition);
+console.log(arraybestScoresElements);
 
-console.log(arrayFirstPositions);
+let bestTimesArrayInCents = [];
+
+console.log(bestTimesArrayInCents[0]);
+
+let userNameVariable;
+
+
+function getBestScores (position1Element, position2Element, position3Element, userName) {
+    if (bestTimesArrayInCents[0] == undefined) {
+        bestTimesArrayInCents.push(cents);
+        userName = prompt('Hai raggiunto un nuovo record!!! Inserisci il tuo nome...');
+        position1Element.innerHTML = `Best Time : ${Math.floor(cents / 100)} seconds - User : ${userName}`;
+    } else if (bestTimesArrayInCents[0] > cents) {
+        bestTimesArrayInCents.unshift(cents);
+        userName = prompt('Hai raggiunto un nuovo record!!! Inserisci il tuo nome...');
+        position1Element.innerHTML = `Best Time : ${Math.floor(cents / 100)} seconds - User : ${userName}`;
+    } else if (bestTimesArrayInCents[1] == undefined) {
+        bestTimesArrayInCents.push(cents);
+        userName = prompt('Hai raggiunto un il podio!!! Inserisci il tuo nome...');
+        position2Element.innerHTML = `Best Time : ${Math.floor(cents / 100)} seconds - User : ${userName}`;
+    } else if (bestTimesArrayInCents[1] > cents) {
+        bestTimesArrayInCents[2] = bestTimesArrayInCents[1];
+        bestTimesArrayInCents[1] = cents
+        userName = prompt('Hai raggiunto un il podio!!! Inserisci il tuo nome...');
+        position2Element.innerHTML = `Best Time : ${Math.floor(cents / 100)} seconds - User : ${userName}`;
+    } else if (bestTimesArrayInCents[2] == undefined) {
+        bestTimesArrayInCents.push(cents);
+        userName = prompt('Hai raggiunto un il podio!!! Inserisci il tuo nome...');
+        position3Element.innerHTML = `Best Time : ${Math.floor(cents / 100)} seconds - User : ${userName}`;
+    } else if (bestTimesArrayInCents[2] > cents) {
+        bestTimesArrayInCents[2] = cents;
+        userName = prompt('Hai raggiunto un il podio!!! Inserisci il tuo nome...');
+        position3Element.innerHTML = `Best Time : ${Math.floor(cents / 100)} seconds - User : ${userName}`;
+    }
+}
+
+
+
+
+
+
+
+
 // event listener che permette l'interazione con il playButton
 playButton.addEventListener ('click', function() {
     startTimer();
